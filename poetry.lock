@@ -4193,8 +4193,8 @@ watchdog = "^3.0.0"
 [package.source]
 type = "git"
 url = "https://github.com/polywrap/predictionprophet"
-reference = "14db74bed6b761e0d1b9373f1484c9936d34501a"
-resolved_reference = "14db74bed6b761e0d1b9373f1484c9936d34501a"
+reference = "1dfb92b0199ff56b974a93c9766ac65464648a43"
+resolved_reference = "1dfb92b0199ff56b974a93c9766ac65464648a43"
 
 [[package]]
 name = "preshed"
@@ -6847,4 +6847,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.10.0"
-content-hash = "cf2118aedb154d801f1fb431f8c106b87006c7fb61e820233fb1a246003ff8ed"
+content-hash = "7be7982c6b6bde492034fb5625d0a4235221b8f9c51d7ba92f0a4723bc685f37"
