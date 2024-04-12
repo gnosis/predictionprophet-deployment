@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "predictionprophet-deployment"
+version = "0.1.0"
+description = ""
+authors = ["Gnosis"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "~3.10.0"
+typer = "^0.9.0"
+mypy = "^1.8.0"
+types-requests = "^2.31.0.20240106"
+black = "^23.12.1"
+autoflake = "^2.2.1"
+isort = "^5.13.2"
+
+prediction-prophet = {git = "https://github.com/polywrap/predictionprophet", rev = "14db74bed6b761e0d1b9373f1484c9936d34501a"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

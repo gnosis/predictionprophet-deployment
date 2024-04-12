@@ -1,0 +1,12 @@
+# Docker specific ignores:
+.git
+
+# .gitignore ignores:
+.env
+.agents_workspace
+.cache
+__pycache__
+*.egg-info
+logs
+.mypy_cache
+.pytest_cache
