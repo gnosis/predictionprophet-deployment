@@ -9,8 +9,8 @@ Can also be executed locally, simply by running `python predictionprophet_deploy
 from enum import Enum
 
 import typer
-
 from prediction_market_agent_tooling.markets.markets import MarketType
+
 from predictionprophet_deployment.agents.prophet_agent.deploy import (
     DeployableOlasEmbeddingOAAgent,
     DeployablePredictionProphetGPT3Agent,
