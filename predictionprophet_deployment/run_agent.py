@@ -14,19 +14,22 @@ from prediction_market_agent_tooling.markets.markets import MarketType
 from predictionprophet_deployment.agents.prophet_agent.deploy import (
     DeployableOlasEmbeddingOAAgent,
     DeployablePredictionProphetGPT3Agent,
-    DeployablePredictionProphetGPT4Agent,
+    DeployablePredictionProphetGPT4TurboFinalAgent,
+    DeployablePredictionProphetGPT4TurboPreviewAgent,
 )
 
 
 class RunnableAgent(str, Enum):
     prophet_gpt3 = "prophet_gpt3"
     prophet_gpt4 = "prophet_gpt4"
+    prophet_gpt4_final = "prophet_gpt4_final"
     olas_embedding_oa = "olas_embedding_oa"
 
 
 RUNNABLE_AGENTS = {
     RunnableAgent.prophet_gpt3: DeployablePredictionProphetGPT3Agent,
-    RunnableAgent.prophet_gpt4: DeployablePredictionProphetGPT4Agent,
+    RunnableAgent.prophet_gpt4: DeployablePredictionProphetGPT4TurboPreviewAgent,
+    RunnableAgent.prophet_gpt4_final: DeployablePredictionProphetGPT4TurboFinalAgent,
     RunnableAgent.olas_embedding_oa: DeployableOlasEmbeddingOAAgent,
 }
 

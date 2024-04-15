@@ -135,8 +135,14 @@ class DeployablePredictionProphetGPT3Agent(DeployableAgentER):
     agent = PredictionProphetAgent(model="gpt-3.5-turbo-0125")
 
 
-class DeployablePredictionProphetGPT4Agent(DeployableAgentER):
+class DeployablePredictionProphetGPT4TurboPreviewAgent(DeployableAgentER):
     agent = PredictionProphetAgent(model="gpt-4-0125-preview")
+    # Limit to just 1, because so far it seems that 20x higher costs aren't justified by the prediction performance.
+    max_markets_per_run = 1
+
+
+class DeployablePredictionProphetGPT4TurboFinalAgent(DeployableAgentER):
+    agent = PredictionProphetAgent(model="gpt-4-turbo-2024-04-09")
     # Limit to just 1, because so far it seems that 20x higher costs aren't justified by the prediction performance.
     max_markets_per_run = 1
 
