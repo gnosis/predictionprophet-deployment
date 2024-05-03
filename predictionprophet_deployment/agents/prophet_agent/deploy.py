@@ -1,12 +1,15 @@
 import typing as t
 from datetime import timedelta
-from decimal import Decimal
 
-from loguru import logger
 from prediction_market_agent_tooling.benchmark.agents import AbstractBenchmarkedAgent
-from prediction_market_agent_tooling.config import APIKeys
-from prediction_market_agent_tooling.deploy.agent import BetAmount, DeployableAgent
+from prediction_market_agent_tooling.config import APIKeys, PrivateCredentials
+from prediction_market_agent_tooling.deploy.agent import (
+    Answer,
+    BetAmount,
+    DeployableAgent,
+)
 from prediction_market_agent_tooling.gtypes import Probability
+from prediction_market_agent_tooling.loggers import logger
 from prediction_market_agent_tooling.markets.agent_market import AgentMarket
 from prediction_market_agent_tooling.markets.manifold.api import (
     get_authenticated_user,
@@ -42,6 +45,7 @@ class DeployableAgentER(DeployableAgent):
     def recently_betted(self, market: AgentMarket) -> bool:
         start_time = utcnow() - timedelta(hours=24)
         keys = APIKeys()
+        credentials = PrivateCredentials.from_api_keys(keys)
         recently_betted_questions = (
             set(
                 get_manifold_market(b.contractId).question
@@ -58,7 +62,7 @@ class DeployableAgentER(DeployableAgent):
                 set(
                     b.title
                     for b in OmenSubgraphHandler().get_bets(
-                        better_address=keys.bet_from_address,
+                        better_address=credentials.public_key,
                         start_time=start_time,
                     )
                 )
@@ -83,30 +87,28 @@ class DeployableAgentER(DeployableAgent):
                 break
         return picked_markets
 
-    def calculate_bet_amount(self, answer: bool, market: AgentMarket) -> BetAmount:
-        amount: Decimal
+    def calculate_bet_amount(self, answer: Answer, market: AgentMarket) -> BetAmount:
+        amount: float
         max_bet_amount: float
         if isinstance(market, ManifoldAgentMarket):
             # Manifold won't give us fractional Mana, so bet the minimum amount to win at least 1 Mana.
-            amount = market.get_minimum_bet_to_win(answer, amount_to_win=1)
+            amount = market.get_minimum_bet_to_win(answer.decision, amount_to_win=1)
             max_bet_amount = 10.0
         elif isinstance(market, OmenAgentMarket):
             # TODO: After https://github.com/gnosis/prediction-market-agent-tooling/issues/161 is done,
             # use agent's probability to calculate the amount.
             market_liquidity = market.get_liquidity_in_xdai()
-            amount = Decimal(
-                stretch_bet_between(
-                    Probability(
-                        prob_uncertainty(market.p_yes)
-                    ),  # Not a probability, but it's a value between 0 and 1, so it's fine.
-                    min_bet=0.5,
-                    max_bet=1.0,
-                )
+            amount = stretch_bet_between(
+                Probability(
+                    prob_uncertainty(market.current_p_yes)
+                ),  # Not a probability, but it's a value between 0 and 1, so it's fine.
+                min_bet=0.5,
+                max_bet=1.0,
             )
-            if answer == (market.p_yes > 0.5):
-                amount = amount * Decimal(0.75)
+            if answer.decision == (market.current_p_yes > 0.5):
+                amount = amount * 0.75
             else:
-                amount = amount * Decimal(1.25)
+                amount = amount * 1.25
             max_bet_amount = (
                 2.0 if market_liquidity > 5 else 0.1 if market_liquidity > 1 else 0
             )
@@ -119,16 +121,17 @@ class DeployableAgentER(DeployableAgent):
             amount = market.get_tiny_bet_amount().amount
         return BetAmount(amount=amount, currency=market.currency)
 
-    def answer_binary_market(self, market: AgentMarket) -> bool | None:
+    def answer_binary_market(self, market: AgentMarket) -> Answer | None:
         prediciton = self.agent.predict(
             market.question
         )  # Already checked in the `pick_markets`.
         if prediciton.outcome_prediction is None:
             logger.error(f"Prediction failed for {market.question}.")
             return None
-        binary_answer: bool = prediciton.outcome_prediction.p_yes > 0.5
-        logger.info(f"Answering '{market.question}' with '{binary_answer}'.")
-        return binary_answer
+        logger.info(
+            f"Answering '{market.question}' with '{prediciton.outcome_prediction.decision}'."
+        )
+        return prediciton.outcome_prediction
 
 
 class DeployablePredictionProphetGPT3Agent(DeployableAgentER):
