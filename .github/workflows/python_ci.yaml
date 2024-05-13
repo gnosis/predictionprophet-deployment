@@ -69,3 +69,13 @@ jobs:
         run: |
           poetry run isort --profile black .
           git diff --exit-code --quiet || exit 1
+
+  build-image-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # This step uses the `docker/build-push-action` action to build the image, based on your repository's `Dockerfile`.
+      - name: Build and push Docker image
+        uses: docker/build-push-action@4a13e500e55cf31b7a5d59a38ab2040ab0f42f56
+        with:
+          push: false
