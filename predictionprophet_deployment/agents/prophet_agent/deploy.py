@@ -2,7 +2,7 @@ import typing as t
 from datetime import timedelta
 
 from prediction_market_agent_tooling.benchmark.agents import AbstractBenchmarkedAgent
-from prediction_market_agent_tooling.config import APIKeys, PrivateCredentials
+from prediction_market_agent_tooling.config import APIKeys
 from prediction_market_agent_tooling.deploy.agent import (
     Answer,
     BetAmount,
@@ -45,7 +45,6 @@ class DeployableTraderAgentER(DeployableTraderAgent):
     def recently_betted(self, market: AgentMarket) -> bool:
         start_time = utcnow() - timedelta(hours=24)
         keys = APIKeys()
-        credentials = PrivateCredentials.from_api_keys(keys)
         recently_betted_questions = (
             set(
                 get_manifold_market(b.contractId).question
@@ -62,7 +61,7 @@ class DeployableTraderAgentER(DeployableTraderAgent):
                 set(
                     b.title
                     for b in OmenSubgraphHandler().get_bets(
-                        better_address=credentials.public_key,
+                        better_address=keys.bet_from_address,
                         start_time=start_time,
                     )
                 )
