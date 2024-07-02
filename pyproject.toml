@@ -13,7 +13,7 @@ types-requests = "^2.31.0.20240106"
 black = "^23.12.1"
 autoflake = "^2.2.1"
 isort = "^5.13.2"
-prediction-prophet = {git = "https://github.com/polywrap/predictionprophet", rev = "4a51ffbf4d0f976bd71fce6e300bceb27e814047"}
+prediction-prophet = {git = "https://github.com/polywrap/predictionprophet", rev = "1b820ad93ddf2f8fc760c4eda20fce4515d66fd8"}
 
 [build-system]
 requires = ["poetry-core"]
