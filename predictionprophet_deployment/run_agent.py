@@ -33,10 +33,13 @@ RUNNABLE_AGENTS = {
     RunnableAgent.olas_embedding_oa: DeployableOlasEmbeddingOAAgent,
 }
 
+APP = typer.Typer(pretty_exceptions_enable=False)
 
+
+@APP.command()
 def main(agent: RunnableAgent, market_type: MarketType) -> None:
     RUNNABLE_AGENTS[agent]().run(market_type)
 
 
 if __name__ == "__main__":
-    typer.run(main)
+    APP()
