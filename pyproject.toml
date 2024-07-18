@@ -13,7 +13,10 @@ types-requests = "^2.31.0.20240106"
 black = "^23.12.1"
 autoflake = "^2.2.1"
 isort = "^5.13.2"
-prediction-prophet = {git = "https://github.com/polywrap/predictionprophet", rev = "87a5bf0392d153611b89cf3400c11e4cc89bde84"}
+# Prediction Prophet is now loosy constrained for `prediction-market-agent-tooling = { version = ">=0.43.0,<1", extras = ["langchain", "google"] }`,
+# so unless there are breaking changes, it's enough to update PMAT here.
+prediction-market-agent-tooling = { version = "^0.43.2", extras = ["langchain", "google"] }
+prediction-prophet = {git = "https://github.com/agentcoinorg/predictionprophet", rev = "ba98871b7fc25519784ce580d901a4d6e17e2ecd"}
 
 [build-system]
 requires = ["poetry-core"]
