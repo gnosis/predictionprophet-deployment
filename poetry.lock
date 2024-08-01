@@ -4408,8 +4408,8 @@ watchdog = "^3.0.0"
 [package.source]
 type = "git"
 url = "https://github.com/agentcoinorg/predictionprophet"
-reference = "ecc58b8a3dc95f34c378db8ae0e7f28401ecaab1"
-resolved_reference = "ecc58b8a3dc95f34c378db8ae0e7f28401ecaab1"
+reference = "0564033867cab3dd620239b042f9f294cb07fb4a"
+resolved_reference = "0564033867cab3dd620239b042f9f294cb07fb4a"
 
 [[package]]
 name = "preshed"
@@ -7217,4 +7217,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.10.0"
-content-hash = "002b283a0bff39bc8583ca29c26afe84da39c0d6cf91d7119e9aa5768b65b533"
+content-hash = "728711b3090a42c117dc1b6caf51a26774521b65ab7c502974c72a06d252f4a6"

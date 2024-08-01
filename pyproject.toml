@@ -16,7 +16,7 @@ isort = "^5.13.2"
 # Prediction Prophet is now loosely constrained for `prediction-market-agent-tooling = { version = ">=0.43.0,<1", extras = ["langchain", "google"] }`,
 # so unless there are breaking changes, it's enough to update PMAT here.
 prediction-market-agent-tooling = { version = "^0.43.2", extras = ["langchain", "google"] }
-prediction-prophet = {git = "https://github.com/agentcoinorg/predictionprophet", rev = "ecc58b8a3dc95f34c378db8ae0e7f28401ecaab1"}
+prediction-prophet = {git = "https://github.com/agentcoinorg/predictionprophet", rev = "0564033867cab3dd620239b042f9f294cb07fb4a"}
 
 [build-system]
 requires = ["poetry-core"]
