@@ -27,5 +27,6 @@ COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 COPY predictionprophet_deployment ./predictionprophet_deployment
 
 ENV PYTHONPATH=/app
+ENV PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
 
 CMD ["bash", "-c", "python predictionprophet_deployment/run_agent.py ${runnable_agent_name} ${market_type}"]
